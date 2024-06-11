@@ -4,6 +4,8 @@ import Detail from "../pages/Detail";
 import fakeData from "../fakeData.json";
 import { ListContext } from "../context/Context";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
 
 const Router = () => {
   const [accountList, setAccountList] = useState(fakeData);
@@ -14,6 +16,8 @@ const Router = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Detail/:id" element={<Detail />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/SignUp" element={<SignUp />} />
         </Routes>
       </BrowserRouter>
     </ListContext.Provider>

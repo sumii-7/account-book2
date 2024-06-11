@@ -51,6 +51,13 @@ export const ListSection = styled.section`
   border-radius: 15px;
 `;
 
+export const LoginBox = styled.div`
+  width: 950px;
+  padding: 0 30px;
+  display: flex;
+  justify-content: right;
+`;
+
 // List style
 export const Stul = styled.ul`
   width: 100%;
@@ -130,3 +137,47 @@ export const Detailinput = styled.input`
   border-radius: 7px;
   border: 1px solid #999;
 `;
+
+// Login.jsx
+export const LoginFormBox = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    width: 350px;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #ffe176;
+    border-radius: 10px;
+  }
+
+  h2 {
+    font-size: 23px;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+`;
+
+export const IdPwInput = styled.input`
+  width: 85%;
+  height: 35px;
+  margin: 0 auto 40px auto;
+  border: none;
+  text-indent: 10px;
+  border-radius: 5px;
+  outline: none;
+`;
+
+export const IdPwButton = styled.button`
+  width: 85%;
+  height: 35px;
+  margin: 0 auto 40px auto;
+  border: none;
+  border-radius: 5px;
+`;
+
+// SignUp,jsx

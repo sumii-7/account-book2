@@ -13,8 +13,9 @@ import {
   FirstP,
   SecondP,
   ListP,
+  LoginBox,
 } from "../style";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ListContext } from "../context/Context";
 
@@ -23,6 +24,7 @@ function Home() {
   // const year = new Array(12).fill(null);
   const year = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const [changemonth, setChangemonth] = useState(1);
+  const navigate = useNavigate();
 
   const selectedmonth = (id) => {
     setChangemonth(id);
@@ -58,6 +60,15 @@ function Home() {
   return (
     <>
       <StWrap>
+        <LoginBox>
+          <button
+            onClick={() => {
+              navigate("/Login");
+            }}
+          >
+            로그인
+          </button>
+        </LoginBox>
         <Whiteform onSubmit={addList}>
           <Input
             input="날짜"
