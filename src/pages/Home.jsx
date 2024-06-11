@@ -13,11 +13,11 @@ import {
   FirstP,
   SecondP,
   ListP,
-  LoginBox,
 } from "../style";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ListContext } from "../context/Context";
+import Header from "./Header";
 
 function Home() {
   const { accountList, setAccountList } = useContext(ListContext);
@@ -59,16 +59,8 @@ function Home() {
 
   return (
     <>
+      <Header />
       <StWrap>
-        <LoginBox>
-          <button
-            onClick={() => {
-              navigate("/Login");
-            }}
-          >
-            로그인
-          </button>
-        </LoginBox>
         <Whiteform onSubmit={addList}>
           <Input
             input="날짜"

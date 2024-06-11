@@ -3,14 +3,11 @@ import styled from "styled-components";
 export const StWrap = styled.div`
   width: 950px;
   height: 1300px;
-  background-color: #ffe176;
-  border-radius: 25px;
   margin: 30px auto 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 25px;
-  padding: 30px;
 `;
 
 export const Whiteform = styled.form`
@@ -51,12 +48,19 @@ export const ListSection = styled.section`
   border-radius: 15px;
 `;
 
-export const LoginBox = styled.div`
-  width: 950px;
-  padding: 0 30px;
-  display: flex;
-  justify-content: right;
-`;
+// export const LoginBox = styled.div`
+//   width: 950px;
+//   padding: 0 30px;
+//   display: flex;
+//   justify-content: right;
+
+//   button {
+//     border: none;
+//     background: none;
+//     font-size: 20px;
+
+//   }
+// `;
 
 // List style
 export const Stul = styled.ul`
@@ -151,14 +155,17 @@ export const LoginFormBox = styled.div`
     display: flex;
     justify-content: center;
     flex-direction: column;
-    background-color: #ffe176;
+    background-color: #61a740;
     border-radius: 10px;
+    border: 3px dashed #fff;
   }
 
   h2 {
-    font-size: 23px;
+    font-size: 28px;
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
+    color: #fff;
+    letter-spacing: 2px;
   }
 `;
 
@@ -180,4 +187,40 @@ export const IdPwButton = styled.button`
   border-radius: 5px;
 `;
 
-// SignUp,jsx
+// Header.jsx
+export const BgHeader = styled.header`
+  height: 60px;
+  background-color: #eee;
+`;
+
+export const StHeader = styled.div`
+  width: 950px;
+  height: 60px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+
+  .left {
+    display: flex;
+    gap: 8px;
+    h1 {
+      width: 55px;
+      font-size: 20px;
+      line-height: 60px;
+    }
+
+    .profile {
+      border: none;
+      font-size: 16px;
+    }
+  }
+  .right {
+    display: flex;
+    align-items: center;
+
+    button {
+      border: none;
+      font-size: 20px;
+    }
+  }
+`;
