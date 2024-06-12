@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { IdPwButton, IdPwInput, LoginFormBox } from "../style";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 const SignUp = () => {
   const [userId, setUserId] = useState("");
@@ -16,10 +17,11 @@ const SignUp = () => {
         password: userPw,
         nickname: userNickname,
       };
-      const { data } = await axios.post(
+      const {} = await axios.post(
         "https://moneyfulpublicpolicy.co.kr/register",
         user
       );
+
       navigate("/Login");
       console.log(data);
     } catch (error) {
@@ -29,12 +31,12 @@ const SignUp = () => {
 
   return (
     <>
+      <Header />
       <LoginFormBox>
         <form
           onSubmit={(e) => {
             e.preventDefault();
             onSubmitHandler();
-            alert("확인");
           }}
         >
           <h2>회원가입</h2>

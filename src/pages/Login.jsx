@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { IdPwButton, IdPwInput, LoginFormBox } from "../style";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Header from "./Header";
+import { ListContext } from "../context/Context";
 
 const Login = () => {
   const [loginUserId, setLoginUserId] = useState("");
@@ -21,11 +23,6 @@ const Login = () => {
 
       console.log(data);
 
-      const token = await axios.get("https://moneyfulpublicpolicy.co.kr/user", {
-        headers: { Authorization: `Bearer ${data.accessToken}` },
-      });
-      console.log(token);
-
       localStorage.setItem("accessToken", data.accessToken);
       navigate("/");
     } catch (error) {
@@ -35,6 +32,7 @@ const Login = () => {
 
   return (
     <>
+      <Header />
       <LoginFormBox>
         <form
           onSubmit={(e) => {

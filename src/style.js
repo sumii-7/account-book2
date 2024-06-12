@@ -203,15 +203,30 @@ export const StHeader = styled.div`
   .left {
     display: flex;
     gap: 8px;
+
     h1 {
       width: 55px;
       font-size: 20px;
       line-height: 60px;
+      cursor: pointer;
+      color: #000;
+      text-decoration: none;
+    }
+
+    .homelink {
+      text-decoration: none;
+    }
+
+    .mypagelink {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
     }
 
     .profile {
       border: none;
       font-size: 16px;
+      cursor: pointer;
     }
   }
   .right {
@@ -221,6 +236,31 @@ export const StHeader = styled.div`
     button {
       border: none;
       font-size: 20px;
+      cursor: pointer;
+    }
+  }
+`;
+
+// MyPage.jsx
+export const ProfileWrap = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  div {
+    width: 450px;
+    height: 500px;
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      border: 1px solid #000;
+      width: 300px;
+      height: 300px;
     }
   }
 `;

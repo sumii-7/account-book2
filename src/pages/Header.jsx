@@ -1,6 +1,6 @@
 import React from "react";
 import { BgHeader, StHeader } from "../style";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -8,8 +8,12 @@ const Header = () => {
     <BgHeader>
       <StHeader>
         <div className="left">
-          <h1>Home</h1>
-          <button className="profile">내 프로필</button>
+          <Link to={"/"} className="homelink">
+            <h1>Home</h1>
+          </Link>
+          <Link to={"/MyPage"} className="mypagelink">
+            <button className="profile">내 프로필</button>
+          </Link>
         </div>
         <div className="right">
           <button
