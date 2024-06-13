@@ -11,7 +11,9 @@ export const getExpenses = async () => {
 
 export const getExpense = async ({ queryKey }) => {
   try {
-    const { data } = await axios.get("http://localhost:4000/List");
+    const { data } = await axios.get(
+      `http://localhost:4000/List/${queryKey[1]}`
+    );
     return data;
   } catch (error) {
     console.error(error);

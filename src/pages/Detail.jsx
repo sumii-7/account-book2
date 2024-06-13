@@ -2,21 +2,37 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DetailSection, DetailWrap, Detaildiv, Detailinput } from "../style";
 import { ListContext } from "../context/Context";
+import { useQuery } from "@tanstack/react-query";
+import { getExpenses } from "../lib/api/expenses";
 
 const Detail = () => {
   const { expensesList, setExpensesList } = useContext(ListContext);
+  const navigate = useNavigate();
+  const { id } = useParams();
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["expenses"],
+  const {
+    data: selectedExpense,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["expenses", id],
     queryFn: getExpenses,
   });
 
-  const navigate = useNavigate();
-  const { id } = useParams();
+  console.log(selectedExpense);
+
   const inputRef = useRef(null);
   const itemRef = useRef(null);
   const amountRef = useRef(null);
   const descriptionRef = useRef(null);
+
+  useEffect(() => {
+    if (selectedExpense) {
+      <div>
+        개짜증난다 특정 아이디만 가져와서 detail페이지에 보이게 해야됨 ;;
+      </div>;
+    }
+  }, [selectedExpense]);
 
   function changeBtn() {
     const newExpensesList = accountList.map((i) => {
@@ -41,11 +57,11 @@ const Detail = () => {
 
   const [dataList, setDataList] = useState({});
 
-  useEffect(() => {
-    const selectId = expensesList.filter((i) => i.id === id);
-    setDataList(selectId[0]);
-  }, [expensesList]);
-  if (!dataList) return null;
+  // useEffect(() => {
+  //   const selectId = expensesList.filter((i) => i.id === id);
+  //   setDataList(selectId[0]);
+  // }, [expensesList]);
+  // if (!dataList) return null;
 
   return (
     <DetailWrap>
