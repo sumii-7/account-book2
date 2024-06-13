@@ -5,33 +5,48 @@ import { ListContext } from "../context/Context";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
-import axios from "axios";
 import MyPage from "../pages/MyPage";
+import Layout from "../components/Layout";
+import { useQuery } from "@tanstack/react-query";
+import { getExpenses } from "../lib/api/expenses";
 
 const Router = () => {
-  const [accountList, setAccountList] = useState([]);
   const [userData, setUserData] = useState(null);
+  const [expensesList, setExpensesList] = useState([]);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["expenses"],
+    queryFn: getExpenses,
+  });
 
   useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const { data } = await axios.get("http://localhost:4000/List");
-        setAccountList(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchPost();
-  }, []);
+    console.log(data);
+    if (data) {
+      setExpensesList(data);
+    }
+  }, [data]);
+
+  if (isLoading) {
+    return <div>로딩중 입니다.</div>;
+  }
 
   return (
     <ListContext.Provider
-      value={{ accountList, setAccountList, userData, setUserData }}
+      value={{
+        userData,
+        setUserData,
+        expensesList,
+        setExpensesList,
+      }}
     >
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Detail/:id" element={<Detail />} />
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="/Detail/:id" element={<Detail />} />
+          </Route>
+        </Routes>
+        <Routes>
           <Route path="/Login" element={<Login />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/MyPage" element={<MyPage />} />

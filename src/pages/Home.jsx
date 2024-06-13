@@ -17,14 +17,23 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ListContext } from "../context/Context";
-import Header from "./Header";
+import { postExpenses } from "../lib/api/expenses";
+import { QueryClient, useMutation } from "@tanstack/react-query";
 
 function Home() {
-  const { accountList, setAccountList } = useContext(ListContext);
   // const year = new Array(12).fill(null);
   const year = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const [changemonth, setChangemonth] = useState(1);
   const navigate = useNavigate();
+  const queryClient = new QueryClient();
+
+  const mutation = useMutation({
+    mutationFn: postExpenses,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["expenses"]);
+      navigate(0);
+    },
+  });
 
   const selectedmonth = (id) => {
     setChangemonth(id);
@@ -42,7 +51,7 @@ function Home() {
 
   const addList = (e) => {
     e.preventDefault();
-    const newList = {
+    const newExpense = {
       id: uuidv4(),
       date: date,
       item: item,
@@ -50,7 +59,8 @@ function Home() {
       description: description,
     };
 
-    setAccountList([...accountList, newList]);
+    mutation.mutate(newExpense);
+
     setDate("");
     setItem("");
     setAmount("");
@@ -59,7 +69,6 @@ function Home() {
 
   return (
     <>
-      <Header />
       <StWrap>
         <Whiteform onSubmit={addList}>
           <Input
@@ -130,12 +139,12 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 `;
 const List = ({ changemonth }) => {
-  const { accountList } = useContext(ListContext);
+  const { expensesList } = useContext(ListContext);
 
   return (
     <Stul>
       <>
-        {accountList
+        {expensesList
           .filter(
             (item) =>
               item.date.split("-")[1] ===

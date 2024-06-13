@@ -4,7 +4,13 @@ import { DetailSection, DetailWrap, Detaildiv, Detailinput } from "../style";
 import { ListContext } from "../context/Context";
 
 const Detail = () => {
-  const { accountList, setAccountList } = useContext(ListContext);
+  const { expensesList, setExpensesList } = useContext(ListContext);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["expenses"],
+    queryFn: getExpenses,
+  });
+
   const navigate = useNavigate();
   const { id } = useParams();
   const inputRef = useRef(null);
@@ -13,7 +19,7 @@ const Detail = () => {
   const descriptionRef = useRef(null);
 
   function changeBtn() {
-    const newAccountList = accountList.map((i) => {
+    const newExpensesList = accountList.map((i) => {
       if (i.id === id) {
         i.date = inputRef.current.value;
         i.item = itemRef.current.value;
@@ -22,26 +28,24 @@ const Detail = () => {
       }
       return i;
     });
-    // console.log(newAccountList);
-    setAccountList(newAccountList);
+    setExpensesList(newExpensesList);
     navigate(-1);
-    // inputRef.current.value;
   }
 
   function deleteBtn() {
-    const deleteAccountList = accountList.filter((i) => i.id !== id);
+    const deleteExpensesList = accountList.filter((i) => i.id !== id);
     alert("정말로 삭제하겠습니까?");
-    setAccountList(deleteAccountList);
+    setExpensesList(deleteExpensesList);
     navigate(-1);
   }
 
-  const [data, setData] = useState({});
+  const [dataList, setDataList] = useState({});
 
   useEffect(() => {
-    const selectId = accountList.filter((i) => i.id === id);
-    setData(selectId[0]);
-  }, [accountList]);
-  if (!data) return null;
+    const selectId = expensesList.filter((i) => i.id === id);
+    setDataList(selectId[0]);
+  }, [expensesList]);
+  if (!dataList) return null;
 
   return (
     <DetailWrap>
@@ -51,7 +55,7 @@ const Detail = () => {
           <Detailinput
             type="text"
             id="date"
-            defaultValue={data.date}
+            defaultValue={dataList.date}
             ref={inputRef}
           />
         </Detaildiv>
@@ -60,7 +64,7 @@ const Detail = () => {
           <Detailinput
             type="text"
             id="item"
-            defaultValue={data.item}
+            defaultValue={dataList.item}
             ref={itemRef}
           />
         </Detaildiv>
@@ -69,7 +73,7 @@ const Detail = () => {
           <Detailinput
             type="text"
             id="amount"
-            defaultValue={data.amount}
+            defaultValue={dataList.amount}
             ref={amountRef}
           />
         </Detaildiv>
@@ -78,7 +82,7 @@ const Detail = () => {
           <Detailinput
             type="text"
             id="description"
-            defaultValue={data.description}
+            defaultValue={dataList.description}
             ref={descriptionRef}
           />
         </Detaildiv>

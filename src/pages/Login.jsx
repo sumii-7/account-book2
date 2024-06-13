@@ -3,7 +3,6 @@ import { IdPwButton, IdPwInput, LoginFormBox } from "../style";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "./Header";
-import { ListContext } from "../context/Context";
 
 const Login = () => {
   const [loginUserId, setLoginUserId] = useState("");
