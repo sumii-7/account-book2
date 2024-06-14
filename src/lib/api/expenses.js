@@ -2,7 +2,9 @@ import axios from "axios";
 
 export const getExpenses = async () => {
   try {
-    const { data } = await axios.get("http://localhost:4000/List");
+    const { data } = await axios.get(
+      "https://indigo-sky-entree.glitch.me/List"
+    );
     return data;
   } catch (error) {
     console.error(error);
@@ -12,7 +14,7 @@ export const getExpenses = async () => {
 export const getExpense = async ({ queryKey }) => {
   try {
     const { data } = await axios.get(
-      `http://localhost:4000/List/${queryKey[1]}`
+      `https://indigo-sky-entree.glitch.me/List/${queryKey[1]}`
     );
     return data;
   } catch (error) {
@@ -23,7 +25,7 @@ export const getExpense = async ({ queryKey }) => {
 export const postExpenses = async (newExpenses) => {
   try {
     const { data } = await axios.post(
-      "http://localhost:4000/List",
+      "https://indigo-sky-entree.glitch.me/List",
       newExpenses
     );
     return data;

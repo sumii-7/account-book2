@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { DetailSection, DetailWrap, Detaildiv, Detailinput } from "../style";
 import { ListContext } from "../context/Context";
 import { useQuery } from "@tanstack/react-query";
-import { getExpenses } from "../lib/api/expenses";
+import { getExpense } from "../lib/api/expenses";
 
 const Detail = () => {
   const { expensesList, setExpensesList } = useContext(ListContext);
@@ -16,7 +16,7 @@ const Detail = () => {
     isError,
   } = useQuery({
     queryKey: ["expenses", id],
-    queryFn: getExpenses,
+    queryFn: getExpense,
   });
 
   console.log(selectedExpense);
@@ -28,9 +28,10 @@ const Detail = () => {
 
   useEffect(() => {
     if (selectedExpense) {
-      <div>
-        개짜증난다 특정 아이디만 가져와서 detail페이지에 보이게 해야됨 ;;
-      </div>;
+      inputRef.current.value = selectedExpense.date;
+      itemRef.current.value = selectedExpense.item;
+      amountRef.current.value = selectedExpense.amount;
+      descriptionRef.current.value = selectedExpense.description;
     }
   }, [selectedExpense]);
 
@@ -67,7 +68,7 @@ const Detail = () => {
     <DetailWrap>
       <DetailSection>
         <Detaildiv>
-          <label for="date">날짜</label>
+          <label htmlFor="date">날짜</label>
           <Detailinput
             type="text"
             id="date"
@@ -76,7 +77,7 @@ const Detail = () => {
           />
         </Detaildiv>
         <Detaildiv>
-          <label for="item">항목</label>
+          <label htmlFor="item">항목</label>
           <Detailinput
             type="text"
             id="item"
@@ -85,7 +86,7 @@ const Detail = () => {
           />
         </Detaildiv>
         <Detaildiv>
-          <label for="amount">금액</label>
+          <label htmlFor="amount">금액</label>
           <Detailinput
             type="text"
             id="amount"
@@ -94,7 +95,7 @@ const Detail = () => {
           />
         </Detaildiv>
         <Detaildiv>
-          <label for="description">내용</label>
+          <label htmlFor="description">내용</label>
           <Detailinput
             type="text"
             id="description"

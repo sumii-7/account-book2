@@ -110,7 +110,7 @@ function Home() {
               setDescription(e.target.value);
             }}
           />
-          <SaveButton type="submit">저장</SaveButton>
+          <SaveButton>저장</SaveButton>
         </Whiteform>
 
         <Section>

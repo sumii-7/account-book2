@@ -22,7 +22,7 @@ const Header = () => {
                 navigate("/Login");
               }}
             >
-              로그아웃
+              로그인
             </button>
           </div>
         </StHeader>
