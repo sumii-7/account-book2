@@ -18,20 +18,19 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ListContext } from "../context/Context";
 import { postExpenses } from "../lib/api/expenses";
-import { QueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 function Home() {
   // const year = new Array(12).fill(null);
   const year = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const [changemonth, setChangemonth] = useState(1);
   const navigate = useNavigate();
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: postExpenses,
     onSuccess: () => {
       queryClient.invalidateQueries(["expenses"]);
-      navigate(0);
     },
   });
 

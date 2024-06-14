@@ -47,3 +47,14 @@ export const putExpense = async (updatedExpense) => {
     console.error(error);
   }
 };
+
+export const deleteExpense = async (id) => {
+  try {
+    const { data } = await axios.delete(
+      `https://indigo-sky-entree.glitch.me/List/${id}`
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};

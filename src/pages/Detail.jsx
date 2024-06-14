@@ -2,14 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DetailSection, DetailWrap, Detaildiv, Detailinput } from "../style";
 import { ListContext } from "../context/Context";
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
-import { getExpense, putExpense } from "../lib/api/expenses";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getExpense, putExpense, deleteExpense } from "../lib/api/expenses";
 
 const Detail = () => {
   const { setExpensesList } = useContext(ListContext);
   const navigate = useNavigate();
   const { id } = useParams();
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   const {
     data: selectedExpense,
@@ -36,25 +36,24 @@ const Detail = () => {
     }
   }, [selectedExpense]);
 
+  const mutationDelete = useMutation({
+    mutationFn: deleteExpense,
+    onSuccess: () => {
+      navigate("/");
+      queryClient.invalidateQueries(["expenses"]);
+    },
+  });
+
   const mutationEdit = useMutation({
     mutationFn: putExpense,
     onSuccess: () => {
-      queryClient.invalidateQueries(["expenses", id]);
-      navigate(0);
+      navigate("/");
+      queryClient.invalidateQueries(["expenses"]);
     },
   });
 
   function changeBtn(e) {
     e.preventDefault();
-    // const newExpensesList = accountList.map((i) => {
-    //   if (i.id === id) {
-    //     i.date = inputRef.current.value;
-    //     i.item = itemRef.current.value;
-    //     i.amoun = amountRef.current.value;
-    //     i.description = descriptionRef.current.value;
-    //   }
-    //   return i;
-    // });
 
     const newExpense = {
       id: id,
@@ -69,19 +68,10 @@ const Detail = () => {
   }
 
   function deleteBtn() {
-    const deleteExpensesList = accountList.filter((i) => i.id !== id);
-    alert("정말로 삭제하겠습니까?");
-    setExpensesList(deleteExpensesList);
-    navigate(-1);
+    mutationDelete.mutate(id);
   }
 
   const [dataList, setDataList] = useState({});
-
-  // useEffect(() => {
-  //   const selectId = expensesList.filter((i) => i.id === id);
-  //   setDataList(selectId[0]);
-  // }, [expensesList]);
-  // if (!dataList) return null;
 
   return (
     <DetailWrap>
