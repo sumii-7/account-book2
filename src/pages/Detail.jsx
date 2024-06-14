@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DetailSection, DetailWrap, Detaildiv, Detailinput } from "../style";
 import { ListContext } from "../context/Context";
-import { useQuery } from "@tanstack/react-query";
-import { getExpense } from "../lib/api/expenses";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { getExpense, putExpense } from "../lib/api/expenses";
 
 const Detail = () => {
-  const { expensesList, setExpensesList } = useContext(ListContext);
+  const { setExpensesList } = useContext(ListContext);
   const navigate = useNavigate();
   const { id } = useParams();
+  const queryClient = new QueryClient();
 
   const {
     data: selectedExpense,
@@ -35,17 +36,35 @@ const Detail = () => {
     }
   }, [selectedExpense]);
 
-  function changeBtn() {
-    const newExpensesList = accountList.map((i) => {
-      if (i.id === id) {
-        i.date = inputRef.current.value;
-        i.item = itemRef.current.value;
-        i.amoun = amountRef.current.value;
-        i.description = descriptionRef.current.value;
-      }
-      return i;
-    });
-    setExpensesList(newExpensesList);
+  const mutationEdit = useMutation({
+    mutationFn: putExpense,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["expenses", id]);
+      navigate(0);
+    },
+  });
+
+  function changeBtn(e) {
+    e.preventDefault();
+    // const newExpensesList = accountList.map((i) => {
+    //   if (i.id === id) {
+    //     i.date = inputRef.current.value;
+    //     i.item = itemRef.current.value;
+    //     i.amoun = amountRef.current.value;
+    //     i.description = descriptionRef.current.value;
+    //   }
+    //   return i;
+    // });
+
+    const newExpense = {
+      id: id,
+      date: inputRef.current.value,
+      item: itemRef.current.value,
+      amount: amountRef.current.value,
+      description: descriptionRef.current.value,
+    };
+
+    mutationEdit.mutate(newExpense);
     navigate(-1);
   }
 
